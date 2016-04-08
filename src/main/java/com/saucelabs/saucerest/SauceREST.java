@@ -3,7 +3,7 @@ package com.saucelabs.saucerest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.saucelabs.saucerest.objects.*;
+import com.saucelabs.saucerest.models.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -171,7 +171,7 @@ public class SauceREST {
 
         try {
             postBack = openConnection(url);
-            postBack.setRequestProperty("User-Agent", this.getUserAgent());
+            postBack.setRequestProperty("SauceUser-Agent", this.getUserAgent());
 
             if (postBack instanceof HttpsURLConnection) {
                 SauceSSLSocketFactory factory = new SauceSSLSocketFactory();
@@ -252,7 +252,7 @@ public class SauceREST {
         BufferedOutputStream out = null;
         try {
             HttpURLConnection connection = openConnection(restEndpoint);
-            connection.setRequestProperty("User-Agent", this.getUserAgent());
+            connection.setRequestProperty("SauceUser-Agent", this.getUserAgent());
 
             connection.setDoOutput(true);
             connection.setRequestMethod("GET");
@@ -312,7 +312,7 @@ public class SauceREST {
         try {
             URL restEndpoint = new URL(String.format(JOB_RESULT_FORMAT, username, jobId));
             postBack = openConnection(restEndpoint);
-            postBack.setRequestProperty("User-Agent", this.getUserAgent());
+            postBack.setRequestProperty("SauceUser-Agent", this.getUserAgent());
             postBack.setDoOutput(true);
             postBack.setRequestMethod("PUT");
             addAuthenticationProperty(postBack);
@@ -613,7 +613,7 @@ public class SauceREST {
      *
      * @return String (in JSON format) representing the stored files list
      */
-    public List<com.saucelabs.saucerest.objects.File> getStoredFiles() {
+    public List<com.saucelabs.saucerest.models.File> getStoredFiles() {
         URL restEndpoint = null;
         try {
             restEndpoint = new URL(String.format(RESTURL, "storage") + "/" + username);
@@ -658,7 +658,7 @@ public class SauceREST {
     }
 
     /**
-     * Returns a String (in JSON format) representing the list of objects describing all the OS and browser platforms
+     * Returns a String (in JSON format) representing the list of models describing all the OS and browser platforms
      * currently supported on Sauce Labs.
      * (see <a href="https://docs.saucelabs.com/reference/rest-api/#get-supported-platforms">https://docs.saucelabs.com/reference/rest-api/#get-supported-platforms</a>).
      * @param automationApi the automation API name

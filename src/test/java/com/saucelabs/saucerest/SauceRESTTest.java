@@ -1,6 +1,6 @@
 package com.saucelabs.saucerest;
 
-import com.saucelabs.saucerest.objects.*;
+import com.saucelabs.saucerest.models.*;
 import junit.framework.TestCase;
 import org.json.JSONObject;
 import org.json.simple.JSONValue;
@@ -257,7 +257,7 @@ public class SauceRESTTest extends TestCase {
 
     @Test
     public void testGetStoredFiles() throws Exception {
-        List<com.saucelabs.saucerest.objects.File> files;
+        List<com.saucelabs.saucerest.models.File> files;
         urlConnection.setResponseCode(200);
 
         urlConnection.setInputStream(getClass().getResource("/storage_empty.json").openStream());

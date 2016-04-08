@@ -1,9 +1,8 @@
-package com.saucelabs.saucerest.objects;
+package com.saucelabs.saucerest.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by halkeye on 2015-11-29.
