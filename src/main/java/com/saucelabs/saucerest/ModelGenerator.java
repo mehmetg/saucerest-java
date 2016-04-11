@@ -39,9 +39,12 @@ public class ModelGenerator {
                 new NewSubUser("test_1112", "hello123", "FirstLast", "hede334@mail.com"));
         generateModel("NewSubUserResponse", apiCall);
         Call<ResponseBody> apiCall = jsonService.getStatus();
-        generateModel("Status", apiCall);*/
+        generateModel("Status", apiCall);
         Call<ResponseBody> apiCall = jsonService.getSupportedPlatforms(Constants.AUTOMATION_API_ALL);
-        generateModel("SupportedPlatforms", apiCall);
+        generateModel("SupportedPlatforms", apiCall);*/
+        Call<ResponseBody> apiCall = jsonService.getJobs(username, null);
+        generateModel("Jobs", apiCall);
+
     }
     private static void generateModel(String className, Call<ResponseBody> apiCall){
         JCodeModel codeModel = new JCodeModel();

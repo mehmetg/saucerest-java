@@ -3,10 +3,14 @@ package com.saucelabs.saucerest.service;
 /**
  * Created by mehmetg on 4/8/16.
  */
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.saucelabs.saucerest.models.tx.JobDetails;
 import com.saucelabs.saucerest.models.tx.NewSubUser;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
+
+import java.util.Date;
 
 /**
  * Created by mehmetgerceker on 4/7/16.
@@ -53,6 +57,41 @@ public interface SauceLabsJSONService {
 
     @GET("v1/info/platforms/{automation_api}")
     Call<ResponseBody> getSupportedPlatforms(@Path("automation_api") String automation_api);
+
+    @GET("v1.1/{username}/jobs")
+    Call<ResponseBody> getJobs(@Path("username") String username,
+                               @Query("number_of_jobs") Integer numberOfJobs,
+                               @Query("full") Boolean getFullInfo,
+                               @Query("skip") Integer numberOfJobsToSkip,
+                               @Query("from") Date fromDate,
+                               @Query("to") Date toDate,
+                               @Query("format") String format);
+
+    @GET("v1/{username}/jobs/{job_id}")
+    Call<ResponseBody> getJob(@Path("username") String username,
+                               @Path("job_id") String jobId);
+
+    @PUT("v1/{username}/jobs/{job_id}")
+    Call<ResponseBody> putJobUpdate(@Path("username") String username,
+                               @Path("job_id") String jobId,
+                               @Body JobDetails jobDetails);
+
+    @PUT("v1/{username}/jobs/{job_id}/stop")
+    Call<ResponseBody> putJobStop(@Path("username") String username,
+                               @Path("job_id") String jobId);
+
+    @GET("v1/{username}/jobs/{job_id}/assets")
+    Call<ResponseBody> getJobAssets(@Path("username") String username,
+                                    @Path("job_id") String jobId);
+
+    @DELETE("v1/{username}/jobs/{job_id}/assets")
+    Call<ResponseBody> deleteJobAssets(@Path("username") String username,
+                                    @Path("job_id") String jobId);
+
+    @GET("v1/{username}/jobs/{job_id}/assets/{file_name}")
+    Call<ResponseBody> getJobAsset(@Path("username") String username,
+                                   @Path("job_id") String jobId,
+                                   @Path("file_name") String filename);
 
 
    /* @GET("/rest/v1/archives/facet_search/{field_name}")

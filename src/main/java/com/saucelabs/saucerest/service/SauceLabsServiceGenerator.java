@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class SauceLabsServiceGenerator {
 
+    //private static final String API_BASE_URL = "https://mehmetg.dev.saucelabs.net/rest/";
     private static final String API_BASE_URL = "https://saucelabs.com/rest/";
 
     public static <S> S createService(Class<S> serviceClass) {
