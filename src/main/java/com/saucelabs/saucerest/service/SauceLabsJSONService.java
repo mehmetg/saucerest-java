@@ -6,6 +6,8 @@ package com.saucelabs.saucerest.service;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.saucelabs.saucerest.models.tx.JobDetails;
 import com.saucelabs.saucerest.models.tx.NewSubUser;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -60,12 +62,15 @@ public interface SauceLabsJSONService {
 
     @GET("v1.1/{username}/jobs")
     Call<ResponseBody> getJobs(@Path("username") String username,
-                               @Query("number_of_jobs") Integer numberOfJobs,
+                               @Query("limit") Integer numberOfJobs,
                                @Query("full") Boolean getFullInfo,
                                @Query("skip") Integer numberOfJobsToSkip,
                                @Query("from") Date fromDate,
                                @Query("to") Date toDate,
-                               @Query("format") String format);
+                               @Query("format") String format,
+                               @Query("manual_only") Boolean manualOnly,
+                               @Query("auto_only") Boolean autoOnly,
+                               @Query("name") Boolean getName);
 
     @GET("v1/{username}/jobs/{job_id}")
     Call<ResponseBody> getJob(@Path("username") String username,
@@ -92,6 +97,49 @@ public interface SauceLabsJSONService {
     Call<ResponseBody> getJobAsset(@Path("username") String username,
                                    @Path("job_id") String jobId,
                                    @Path("file_name") String filename);
+
+    @Multipart
+    @POST("v1/storage/{username}/{your_file_name}")
+    Call<ResponseBody> postFile(@Path("username") String username,
+                                @Path("your_file_name") String filename,
+                                @Part("description") RequestBody description,
+                                @Part Part file);
+
+    @GET("v1/storage/{username}")
+    Call<ResponseBody> getStoredFiles(@Path("username") String username);
+
+    @GET("v1.1/users/{username}/concurrency")
+    Call<ResponseBody> getRealtimeConcurrency(@Path("username") String username);
+
+    @GET("v1/users/{username}/activity")
+    Call<ResponseBody> getActivity(@Path("username") String username);
+
+    @GET("v1/users/{username}/tunnels")
+    Call<ResponseBody> getTunnels(@Path("username") String username);
+
+    @GET("v1/users/{username}/tunnels/{tunnel_id}")
+    Call<ResponseBody> getTunnel(@Path("username") String username,
+                                 @Path("tunnel_id") String tunnelId);
+
+    @DELETE("v1/users/{username}/tunnels/{tunnel_id}")
+    Call<ResponseBody> deleteTunnel(@Path("username") String username,
+                                 @Path("tunnel_id") String tunnelId);
+
+    /**
+     *
+     * @param username username for the account owner
+     * @param startDate start date in YYYY-MM-DD
+     * @param endDate end date in YYYY-MM-DD
+     * @return usage information in the following format
+     * {"usage": [["2015-3-20", [5, 467]], ["2015-3-1", [7, 114]]], "username": "YOUR_USERNAME"}
+     */
+    @GET("v1/users/{username}/usage")
+    Call<ResponseBody> getUsage(@Path("username") String username,
+                                @Path("start") String startDate,
+                                @Path("end") String endDate);
+
+    @POST("v1/users/{username}/accesskey/change")
+    Call<ResponseBody> postChangeAccessKey(@Path("username") String username);
 
 
    /* @GET("/rest/v1/archives/facet_search/{field_name}")
