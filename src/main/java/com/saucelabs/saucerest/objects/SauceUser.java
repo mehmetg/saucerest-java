@@ -1,10 +1,9 @@
-package com.saucelabs.saucerest.models;
+package com.saucelabs.saucerest.objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.saucelabs.saucerest.models.ConcurrencyLimit;
 
 import java.io.Serializable;
 import java.util.ArrayList;

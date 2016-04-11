@@ -1,4 +1,4 @@
-package com.saucelabs.saucerest.models;
+package com.saucelabs.saucerest.objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;

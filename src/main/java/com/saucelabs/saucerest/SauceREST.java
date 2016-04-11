@@ -3,7 +3,7 @@ package com.saucelabs.saucerest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.saucelabs.saucerest.models.*;
+import com.saucelabs.saucerest.objects.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -613,7 +613,7 @@ public class SauceREST {
      *
      * @return String (in JSON format) representing the stored files list
      */
-    public List<com.saucelabs.saucerest.models.File> getStoredFiles() {
+    public List<com.saucelabs.saucerest.objects.File> getStoredFiles() {
         URL restEndpoint = null;
         try {
             restEndpoint = new URL(String.format(RESTURL, "storage") + "/" + username);
@@ -636,7 +636,7 @@ public class SauceREST {
      *
      * @return String (in JSON format) representing the basic account information
      */
-    public User getUser() {
+    public SauceUser getUser() {
         URL restEndpoint = null;
         try {
             restEndpoint = new URL(String.format(USER_RESULT_FORMAT, "users", username));
@@ -645,7 +645,7 @@ public class SauceREST {
         }
         String json = doREST("GET", restEndpoint, null);
         try {
-            return mapper.readValue(json, User.class);
+            return mapper.readValue(json, SauceUser.class);
         } catch (UnrecognizedPropertyException e) {
             if ("errors".equals(e.getPropertyName())) {
                 return null; // FIXME

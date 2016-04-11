@@ -1,4 +1,4 @@
-package com.saucelabs.saucerest.models;
+package com.saucelabs.saucerest.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -7,7 +7,6 @@ import com.saucelabs.saucerest.deserializers.UnixtimeDeserializer;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Set;
 
 public class Concurrency implements Serializable {
 
@@ -45,7 +44,7 @@ public class Concurrency implements Serializable {
         @JsonProperty("manual")
         private int manual;
 
-        public int getOverall() {—
+        public int getOverall() {
             return overall;
         }
 

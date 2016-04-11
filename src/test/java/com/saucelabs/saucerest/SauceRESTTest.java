@@ -1,6 +1,6 @@
 package com.saucelabs.saucerest;
 
-import com.saucelabs.saucerest.models.*;
+import com.saucelabs.saucerest.objects.*;
 import junit.framework.TestCase;
 import org.json.JSONObject;
 import org.json.simple.JSONValue;
@@ -207,7 +207,7 @@ public class SauceRESTTest extends TestCase {
     public void testGetUser() throws Exception {
         urlConnection.setResponseCode(200);
         urlConnection.setInputStream(getClass().getResource("/user_test.json").openStream());
-        User userInfo = sauceREST.getUser();
+        SauceUser userInfo = sauceREST.getUser();
         assertEquals(this.urlConnection.getRealURL().getPath(), "/rest/v1/users/" + this.sauceREST.getUsername() + "");
         assertNotNull(userInfo);
 
@@ -239,14 +239,14 @@ public class SauceRESTTest extends TestCase {
 
         assertEquals(Arrays.asList("marketing"), userInfo.getPreventEmails());
 
-        assertEquals(false, userInfo.getVerified());
-        assertEquals(false, userInfo.getSubscribed());
-        assertEquals(true, userInfo.getAncestorAllowsSubaccounts());
-        assertEquals(false, userInfo.getVmLockdown());
+        assertEquals(false, userInfo.isVerified());
+        assertEquals(false, userInfo.isSubscribed());
+        assertEquals(true, userInfo.isAncestorAllowsSubaccounts());
+        assertEquals(false, userInfo.isVmLockdown());
         assertEquals(null, userInfo.getParent());
-        assertEquals(null, userInfo.getIsAdmin());
-        assertEquals(true, userInfo.getCanRunManual());
-        assertEquals(false, userInfo.getIsSso());
+        assertEquals(null, userInfo.isAdmin());
+        assertEquals(true, userInfo.isCanRunManual());
+        assertEquals(false, userInfo.isSso());
 
         urlConnection.setResponseCode(401);
         urlConnection.setInputStream(new ByteArrayInputStream(
@@ -257,7 +257,7 @@ public class SauceRESTTest extends TestCase {
 
     @Test
     public void testGetStoredFiles() throws Exception {
-        List<com.saucelabs.saucerest.models.File> files;
+        List<com.saucelabs.saucerest.objects.File> files;
         urlConnection.setResponseCode(200);
 
         urlConnection.setInputStream(getClass().getResource("/storage_empty.json").openStream());
@@ -415,13 +415,13 @@ public class SauceRESTTest extends TestCase {
         assertEquals(0, activity.getTotals().getInProgress());
         assertEquals(0, activity.getTotals().getQueued());
 
-        assertEquals(0, activity.getSubaccount("halkeye").getAll());
-        assertEquals(0, activity.getSubaccount("halkeye").getInProgress());
-        assertEquals(0, activity.getSubaccount("halkeye").getQueued());
+        assertEquals(0, activity.getSubAccounts().get("halkeye").getAll());
+        assertEquals(0, activity.getSubAccounts().get("halkeye").getInProgress());
+        assertEquals(0, activity.getSubAccounts().get("halkeye").getQueued());
 
-        assertNull(activity.getSubaccount("no real account"));
+        assertNull(activity.getSubAccounts().get("no real account"));
 
-        assertEquals(new HashSet<String>(Arrays.asList("halkeye", "gavin_sauce_1")), activity.getSubaccounts());
+        assertEquals(new HashSet<String>(Arrays.asList("halkeye", "gavin_sauce_1")), activity.getSubAccounts());
 
     }
 
@@ -468,19 +468,19 @@ public class SauceRESTTest extends TestCase {
         assertNull(this.urlConnection.getRealURL().getQuery());
         assertEquals(1448857070346L, concurencyInfo.getTimestamp().getTime());
 
-        assertEquals(0, concurencyInfo.getSubaccount("halkeye").getCurrent().getMac());
-        assertEquals(0, concurencyInfo.getSubaccount("halkeye").getCurrent().getManual());
-        assertEquals(0, concurencyInfo.getSubaccount("halkeye").getCurrent().getOverall());
+        assertEquals(0, concurencyInfo.getSubAccounts().get("halkeye").getCurrent().getMac());
+        assertEquals(0, concurencyInfo.getSubAccounts().get("halkeye").getCurrent().getManual());
+        assertEquals(0, concurencyInfo.getSubAccounts().get("halkeye").getCurrent().getOverall());
 
-        assertEquals(100, concurencyInfo.getSubaccount("halkeye").getRemaining().getMac());
-        assertEquals(5, concurencyInfo.getSubaccount("halkeye").getRemaining().getManual());
-        assertEquals(100, concurencyInfo.getSubaccount("halkeye").getRemaining().getOverall());
+        assertEquals(100, concurencyInfo.getSubAccounts().get("halkeye").getRemaining().getMac());
+        assertEquals(5, concurencyInfo.getSubAccounts().get("halkeye").getRemaining().getManual());
+        assertEquals(100, concurencyInfo.getSubAccounts().get("halkeye").getRemaining().getOverall());
 
-        assertEquals(1, concurencyInfo.getSubaccount("gavin_sauce_1").getRemaining().getOverall());
+        assertEquals(1, concurencyInfo.getSubAccounts().get("gavin_sauce_1").getRemaining().getOverall());
 
-        assertNull(concurencyInfo.getSubaccount("no real account"));
+        assertNull(concurencyInfo.getSubAccounts().get("no real account"));
 
-        assertEquals(new HashSet<String>(Arrays.asList("halkeye", "gavin_sauce_1")), concurencyInfo.getSubaccounts());
+        assertEquals(new HashSet<String>(Arrays.asList("halkeye", "gavin_sauce_1")), concurencyInfo.getSubAccounts());
     }
 
     @Test

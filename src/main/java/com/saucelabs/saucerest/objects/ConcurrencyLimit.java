@@ -1,4 +1,4 @@
-package com.yourcompany.models;
+package com.saucelabs.saucerest.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
